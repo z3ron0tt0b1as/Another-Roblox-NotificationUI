@@ -1,0 +1,110 @@
+local NotificationLibrary = {}
+
+local AbyssGUI = Instance.new("ScreenGui")
+AbyssGUI.Name = "Abyss"
+AbyssGUI.Parent = game.CoreGui
+AbyssGUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+function NotificationLibrary:Notify(TitleText, Desc, Delay)
+    local Notification = Instance.new("Frame")
+    local Line = Instance.new("Frame")
+    local Icon = Instance.new("ImageLabel")
+    local UICorner = Instance.new("UICorner")
+    local Title = Instance.new("TextLabel")
+    local Description = Instance.new("TextLabel")
+    local Button = Instance.new("TextButton")  -- Interactive button
+
+    -- Notification Frame
+    Notification.Name = "Notification"
+    Notification.Parent = AbyssGUI
+    Notification.BackgroundColor3 = Color3.fromRGB(35, 35, 35)  -- Darker background for sleek feel
+    Notification.BackgroundTransparency = 0.2
+    Notification.BorderSizePixel = 0
+    Notification.Position = UDim2.new(1, 5, 0, 75)
+    Notification.Size = UDim2.new(0, 500, 0, 80)  -- Larger notification for better readability
+    Notification.AnchorPoint = Vector2.new(1, 0)  -- Position notifications from right to left
+
+    -- Line
+    Line.Name = "Line"
+    Line.Parent = Notification
+    Line.BackgroundColor3 = Color3.fromRGB(0, 204, 255)  -- Neon blue line for a futuristic look
+    Line.BorderSizePixel = 0
+    Line.Position = UDim2.new(0, 0, 0.9, 0)
+    Line.Size = UDim2.new(0, 0, 0, 4)
+    
+    -- Icon (with a futuristic look)
+    Icon.Name = "Icon"
+    Icon.Parent = Notification
+    Icon.BackgroundTransparency = 1
+    Icon.Position = UDim2.new(0.025, 0, 0.15, 0)
+    Icon.Size = UDim2.new(0, 45, 0, 45)
+    Icon.Image = "rbxassetid://1234567890"  -- Custom icon image
+    Icon.ImageColor3 = Color3.fromRGB(0, 204, 255)
+    Icon.ScaleType = Enum.ScaleType.Fit
+
+    -- Rounded corners
+    UICorner.CornerRadius = UDim.new(0, 10)
+    UICorner.Parent = Notification
+
+    -- Title Text
+    Title.Name = "Title"
+    Title.Parent = Notification
+    Title.BackgroundTransparency = 1
+    Title.Position = UDim2.new(0.1, 0, 0.1, 0)
+    Title.Size = UDim2.new(0, 340, 0, 20)
+    Title.Text = TitleText
+    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Title.TextSize = 14
+    Title.Font = Enum.Font.GothamBold  -- Sleek font for title
+    Title.TextStrokeTransparency = 0.5
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Description Text
+    Description.Name = "Description"
+    Description.Parent = Notification
+    Description.BackgroundTransparency = 1
+    Description.Position = UDim2.new(0.1, 0, 0.4, 0)
+    Description.Size = UDim2.new(0, 340, 0, 18)
+    Description.Text = Desc
+    Description.TextColor3 = Color3.fromRGB(200, 200, 200)
+    Description.TextSize = 12
+    Description.Font = Enum.Font.Gotham
+    Description.TextStrokeTransparency = 0.5
+    Description.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Button (interactive feature)
+    Button.Name = "Button"
+    Button.Parent = Notification
+    Button.BackgroundColor3 = Color3.fromRGB(0, 204, 255)
+    Button.Position = UDim2.new(0.75, 0, 0.6, 0)
+    Button.Size = UDim2.new(0, 80, 0, 30)
+    Button.Text = "Close"
+    Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Button.TextSize = 14
+    Button.Font = Enum.Font.GothamBold
+    Button.TextStrokeTransparency = 0.5
+
+    -- Button hover effect
+    Button.MouseEnter:Connect(function()
+        Button.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+    end)
+
+    Button.MouseLeave:Connect(function()
+        Button.BackgroundColor3 = Color3.fromRGB(0, 204, 255)
+    end)
+
+    -- Animation: Slide in
+    Notification:TweenPosition(UDim2.new(1, -500, 0, 75), "Out", "Sine", 0.5)
+
+    -- Animation: Line Expansion
+    wait(0.5)  -- Wait for slide-in to complete
+    Line:TweenSize(UDim2.new(0, 500, 0, 4), "Out", "Linear", 0.5)
+
+    -- Close after Delay
+    wait(Delay)
+    Notification:TweenPosition(UDim2.new(1, 5, 0, 75), "Out", "Sine", 0.5)
+    wait(0.5)
+    Notification:Destroy()
+end
+
+return NotificationLibrary
